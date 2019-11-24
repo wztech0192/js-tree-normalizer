@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./normalizer.js"></script>
+</head>
+
+<body>
+    <h3>Display With Normalized Data</h3>
+    <ol id="tree"></ol>
+    <hr>
+    <h3>Original Data</h3>
+    <pre id="originalData">
+
+    </pre>
+    <hr>
+    <h3>Normalized Data</h3>
+    <pre id="normalizedData">
+
+    </pre>
+    <hr>
+    <h3>Denormalized Data</h3>
+    <pre id="denormalizedData">
+
+    </pre>
+</body>
+
+<script>
+
+    var initTree = [
+        {
+            title: 'node 1',
+            nodes: [
+                {
+                    title: 'node 1-1',
+                    nodes: []
+                },
+                {
+                    title: 'node 1-2',
+                    nodes: [
+                        {
+                            title: 'node 1-2-1',
+                            nodes: []
+                        },
+                        {
+                            title: 'node 1-2-2',
+                            nodes: []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            title: 'node 2',
+            nodes: []
+        }
+    ];
+
+    const normalizedData = normalizeData(initTree, 'nodes');
+    console.log(normalizedData);
+    const denormalizedData = normalizedData.entries.map(getDenormalizeMapper(
+        normalizedData.result,
+        'nodes',
+        node => node,
+        (node, mapper) => ({
+            ...node,
+            nodes: node.nodes.map(mapper)
+        })
+    ));
+    console.log(denormalizedData);
+
+
+    //display data
+    document.getElementById("originalData").textContent = JSON.stringify(initTree, undefined, 4);
+    document.getElementById("normalizedData").textContent = JSON.stringify(normalizedData, undefined, 4);
+    document.getElementById("denormalizedData").textContent = JSON.stringify(denormalizedData, undefined, 4);
+
+    //display tree with normalized data
+
+    const appendMultipleNodes = (parent, nodes) => {
+        for (node of nodes) {
+            parent.appendChild(node);
+        }
+    }
+    appendMultipleNodes(document.getElementById('tree'), normalizedData.entries.map(getDenormalizeMapper(
+        normalizedData.result,
+        'nodes',
+        node => {
+            const li = document.createElement("li");
+            li.textContent = node.title;
+            return li;
+        },
+        (node, mapper) => {
+            const li = document.createElement("li");
+            li.textContent = node.title;
+            const innerList = document.createElement("ol");
+            appendMultipleNodes(innerList, node.nodes.map(mapper));
+            li.appendChild(innerList);
+            return li;
+        }
+    )))
+
+
+
+
+
+
+
+</script>
+
+</html>
