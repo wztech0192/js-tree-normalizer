@@ -11,16 +11,16 @@ A lightweight library used to normalize and denormalize tree data structure for 
 The return result will be a object of questions and entires
 
 `const {
-  result //normalized data array,
-  entries //the entries of the normalized data
+    result //normalized data array,
+    entries //the entries of the normalized data
 } = normalizeData( OriginalDataArray, ChildrenPropertyNameString );`
 
 
 ## Denormalize Data
-//getDenormalizeMapper returns a callback function for Array.map
+getDenormalizeMapper returns a callback function for Array.map
 
-const denormalizedData = entries.map(
-  getDenormalizeMapper(
+`const denormalizedData = entries.map(
+    getDenormalizeMapper(
         normalizedData, //first parameter take normalizedData array
         entities => {...entities}, //second parameter take a callback function for mapping leaf
         (entities, mapper) => ({   //second parameter take a callback function for mapping node
@@ -29,7 +29,7 @@ const denormalizedData = entries.map(
         })
       )
   )
-);
+);`
 
 
 ##Demo
