@@ -34,8 +34,16 @@ const denormalizedData = entries.map(
 # Demo 
 Download demo.html and open it for testing
 
+## Data HTML Display, (Using Normalized Structure)
+* node 1
+  * node 1-1
+  * node 1-2
+    * node 1-2-1
+    * node 1-2-2
+* node 2
+
+## Original Data
 ```
-Original Data
 [
     {
         "title": "node 1",
@@ -64,7 +72,10 @@ Original Data
         "nodes": []
     }
 ]
-Normalized Data
+```
+
+## Normalized Data
+```
 {
     "result": [
         {
@@ -115,7 +126,10 @@ Normalized Data
         5
     ]
 }
-Denormalized Data
+```
+
+## Denormalized Data
+```
 [
     {
         "title": "node 1",
