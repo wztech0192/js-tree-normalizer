@@ -3,20 +3,20 @@ A lightweight library used to normalize and denormalize tree data structure for 
 
 
 
-##How to Use
+## How to Use
 * Download normalizer.js from the package and place it into your javascript project
 * In js file, import {normalizeData, getDenormalizeMapper} from '.../normalizer'
 
-##Normalize Data
+## Normalize Data
 The return result will be a object of questions and entires
 
-const {
+`const {
   result //normalized data array,
   entries //the entries of the normalized data
-} = normalizeData( OriginalDataArray, ChildrenPropertyNameString );
+} = normalizeData( OriginalDataArray, ChildrenPropertyNameString );`
 
 
-##Denormalize Data
+## Denormalize Data
 //getDenormalizeMapper returns a callback function for Array.map
 
 const denormalizedData = entries.map(
