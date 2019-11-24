@@ -21,8 +21,9 @@ getDenormalizeMapper returns a callback function for Array.map
 const denormalizedData = entries.map(
     getDenormalizeMapper(
         normalizedData, //first parameter take normalizedData array
-        entities => {...entities}, //second parameter take a callback function for mapping leaf
-        (entities, mapper) => ({   //second parameter take a callback function for mapping node
+        childPropertyName, //second parameter take the property name of the nested children
+        entities => {...entities}, //third parameter take a callback function for mapping leaf
+        (entities, mapper) => ({   //fourth parameter take a callback function for mapping node
           ...entities,
           children: entities.children.map(mapper)
         })
