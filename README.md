@@ -31,4 +31,4 @@ const denormalizedData = entries.map(
 )
 ```
 # Demo 
-download demo.html and open it for testing
+Download demo.html and open it for testing
