@@ -1,6 +1,8 @@
 # js-tree-normalizer
 A lightweight Javascript library used for normalize and denormalize tree data structure! Required support for ES6 Syntax.
 
+# Demo 
+See demo.html or click [here](http://www.wztechs.com/js-tree-normalizer/demo.html)
 
 # How to Use
 * Download normalizer.js from the package and import it into your javascript project
@@ -31,8 +33,8 @@ const denormalizedData = entries.map(
   )
 )
 ```
-# Demo 
-Download demo.html and open it for testing
+
+# Example
 
 ## Data HTML Display, (Using Normalized Structure)
 * node 1

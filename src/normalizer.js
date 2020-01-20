@@ -1,5 +1,5 @@
 
-const normalizeData = (dataArr, childrenPropertyName) => {
+const normalizeData = (dataArr = [], childrenPropertyName) => {
   const result = [];
   const callback = parentKey => (entries, cur) => {
     //define index key of the current entity
@@ -32,12 +32,12 @@ const normalizeData = (dataArr, childrenPropertyName) => {
 };
 
 
-const getDenormalizeMapper = (data, childrenPropertyName, leafCB, nodeCB) => {
+const getDenormalizeMapper = (data = [], childrenPropertyName, leafCB, nodeCB) => {
   //construct mapper
   const mapper = i => {
     const entity = data[i];
     if (entity[childrenPropertyName] && entity[childrenPropertyName].length > 0) {
-      return nodeCB(entity, mapper);
+        return nodeCB ? nodeCB(entity, mapper) : leafCB(entity, mapper) ;
     }
     return leafCB(entity);
   };

@@ -5,12 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <link type="image/x-icon" href="./favicon.png" rel="icon">
+    <title>JS Tree Normalizer</title>
     <script src="./normalizer.js"></script>
 </head>
 
 <body>
-    <h3>Display With Normalized Data</h3>
+    <h3>Display With Normalized Data
+        <a href="https://github.com/weijie0192/js-tree-normalizer" style="float:right;">Github</a>
+
+    </h3>
+    <i>Click on each node to expand/collapse</i>
     <ol id="tree"></ol>
     <hr>
     <h3>Original Data</h3>
@@ -89,17 +94,33 @@
     appendMultipleNodes(document.getElementById('tree'), normalizedData.entries.map(getDenormalizeMapper(
         normalizedData.result,
         'nodes',
-        node => {
+        (node, childrenMapper) => {
             const li = document.createElement("li");
-            li.textContent = node.title;
-            return li;
-        },
-        (node, mapper) => {
-            const li = document.createElement("li");
-            li.textContent = node.title;
-            const innerList = document.createElement("ol");
-            appendMultipleNodes(innerList, node.nodes.map(mapper));
-            li.appendChild(innerList);
+            const text = document.createElement("span");
+            text.textContent = node.title;
+            li.appendChild(text);
+            if (childrenMapper) {
+                const innerList = document.createElement("ol");
+                appendMultipleNodes(innerList, node.nodes.map(childrenMapper));
+                li.appendChild(innerList);
+                text.onclick = function () {
+                    if (innerList.style.display === 'none') {
+                        innerList.style.display = 'block';
+                    }
+                    else {
+                        innerList.style.display = 'none';
+                    }
+                }
+
+            }
+            text.onmouseenter = function () {
+                li.style.background = 'lightgray';
+            }
+            text.onmouseleave = function () {
+                li.style.background = 'inherit';
+                li.style.color = 'inherit';
+            }
+
             return li;
         }
     )))
