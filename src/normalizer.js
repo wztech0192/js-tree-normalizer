@@ -1,47 +1,43 @@
-
 const normalizeData = (dataArr = [], childrenPropertyName) => {
-  const result = [];
-  const callback = parentKey => (entries, cur) => {
-    //define index key of the current entity
-    const key = result.length;
-    //get array children array
-    let children = cur[childrenPropertyName];
-    //push a new entity
-    let entity = {
-      ...cur,
-      key,
-      [childrenPropertyName] : children,
-      parentKey
+    const result = [];
+    const callback = (nestedDataArr, parent) => {
+        const keyArr = [];
+        let children, entity;
+        for (let cur of nestedDataArr) {
+            children = cur[childrenPropertyName] || [];
+            entity = {
+                ...cur,
+                key: result.length,
+                occupied: 1,
+            };
+            result.push(entity);
+            keyArr.push(entity.key);
+            entity[childrenPropertyName] = children.length > 0 ? callback(children, entity) : [];
+            if (parent) {
+                entity.parentKey = parent.key;
+                parent.occupied += entity.occupied;
+            } else {
+                entity.parentKey = -1;
+            }
+        }
+        return keyArr;
     };
-    //push parent to result array
-    result.push(entity);
-    //push parent key to entries array
-    entries.push(key);
-    //recursively map the child if condition met
-    if (children && children.length > 0) {
-      entity[childrenPropertyName] = children.reduce(callback(key), []);
-    }
-    //return entries
-    return entries;
-  };
 
-  return {
-    result,
-    entries: dataArr.reduce(callback(-1), [])
-  };
+    return {
+        result,
+        entries: callback(dataArr),
+    };
 };
-
 
 const getDenormalizeMapper = (data = [], childrenPropertyName, leafCB, nodeCB) => {
-  //construct mapper
-  const mapper = i => {
-    const entity = data[i];
-    if (entity[childrenPropertyName] && entity[childrenPropertyName].length > 0) {
-        return nodeCB ? nodeCB(entity, mapper) : leafCB(entity, mapper) ;
-    }
-    return leafCB(entity);
-  };
-  //return mapper
-  return mapper;
+    //construct mapper
+    const mapper = (i) => {
+        const entity = data[i];
+        if (entity[childrenPropertyName] && entity[childrenPropertyName].length > 0) {
+            return nodeCB ? nodeCB(entity, mapper) : leafCB(entity, mapper);
+        }
+        return leafCB(entity);
+    };
+    //return mapper
+    return mapper;
 };
-
