@@ -1,6 +1,6 @@
 {
   "name": "js-tree-normalizer",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A lightweight Javascript library used for normalize and denormalize tree data structure! Required support for ES6 Syntax.",
   "main": "lib/index.js",
   "scripts": {
