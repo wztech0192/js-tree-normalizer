@@ -1,6 +1,6 @@
 {
   "name": "js-tree-normalizer",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A lightweight Javascript library used for normalize and denormalize tree data structure! Required support for ES6 Syntax.",
   "main": "lib/index.js",
   "scripts": {
@@ -23,5 +23,10 @@
     "babel-plugin-syntax-class-properties": "^6.13.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-es2015": "^6.24.1"
-  }
+  },
+  "keywords": [
+    "normalize",
+    "denormalize",
+    "tree"
+  ]
 }
